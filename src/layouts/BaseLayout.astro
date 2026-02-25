@@ -1,0 +1,35 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer.astro";
+import WhatsAppSticky from "../components/WhatsAppSticky";
+
+const { lang = "en", title = "KUSI" } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  </head>
+
+  <body class="min-h-screen flex flex-col bg-[#F7F8FA] text-[#111111]">
+    
+    <Navbar client:load />
+
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <WhatsAppSticky client:load />
+
+  </body>
+</html>

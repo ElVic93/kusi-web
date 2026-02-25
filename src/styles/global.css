@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+/* Base global 1:1 con tu MVP */
+:root {
+  --kusi-brand: #C4161C;
+  --kusi-ink: #111111;
+  --kusi-surface: #F7F8FA;
+  --kusi-border: #E4E6E8;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--kusi-surface);
+  color: var(--kusi-ink);
+}
