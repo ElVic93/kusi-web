@@ -6,22 +6,27 @@ import Badge from '../../components/Badge';
 
 import { BadgeVariant } from '../../lib/types';
 import { getT } from '../../lib/i18n';
+import { getWhatsAppLink } from '../../lib/utils';
 
 const lang = 'es';
 const t = getT(lang);
+const waLink = getWhatsAppLink(lang);
 ---
 
-<BaseLayout lang={lang} title="KUSI" description="">
+<BaseLayout
+  lang={lang}
+  title="KUSI Fútbol Tours"
+  description="Matchday experience in Lima: tickets, transport, guide and a safe local football atmosphere."
+>
+  <!-- HERO -->
   <section id="hero" class="relative pt-16 pb-24 md:pt-24 md:pb-32 px-4 overflow-hidden">
     <div class="max-w-[1120px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       
       <div class="z-10">
-        
         <div class="flex flex-wrap gap-2 mb-6">
           <Badge variant={BadgeVariant.AMBER}>
             {t.hero.badgeLimited}
           </Badge>
-
           <Badge variant={BadgeVariant.INFO}>
             {t.hero.badgeGroup}
           </Badge>
@@ -38,7 +43,7 @@ const t = getT(lang);
           {t.hero.subtitle}
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+        <div class="flex flex-col sm:flex-row gap-4 mb-4">
           <Button
             variant="primary"
             href="#pricing"
@@ -48,33 +53,193 @@ const t = getT(lang);
             {t.hero.ctaPrimary}
           </Button>
 
-          <Button
-            variant="secondary"
-            href="#how-it-works"
-          >
+          <Button variant="secondary" href="#how-it-works">
             {t.hero.ctaSecondary}
           </Button>
         </div>
 
+        {t.hero.ctaMicrocopy && (
+          <div class="text-xs text-[#111111]/40 italic mb-6">
+            {t.hero.ctaMicrocopy}
+          </div>
+        )}
+
         <div class="flex flex-wrap gap-3">
-          {t.hero.trustChips.map((chip: string) => (
+          {(t.hero.trustChips ?? []).map((chip: string) => (
             <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-[#E4E6E8] text-sm font-medium text-[#111111]/70">
               {chip}
             </span>
           ))}
         </div>
-
       </div>
 
+      <!-- SLIDER + NEXT MATCH -->
       <div class="relative">
         <div class="aspect-[4/5] rounded-[24px] overflow-hidden shadow-2xl bg-[#E4E6E8] border-4 border-white relative">
           <HeroSlider client:visible />
           <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+        </div>
+
+        <!-- NEXT MATCH CARD (lg only, igual que original) -->
+        <div class="hidden lg:block absolute -bottom-10 -left-10 bg-white border border-[#E4E6E8] rounded-[24px] shadow-xl p-6 w-[300px]">
+          
+          <div class="text-xs uppercase tracking-wider text-[#111111]/40 mb-3">
+            {t.hero.nextMatch}
+          </div>
+
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <img src={t.hero.nextMatchData.homeLogo} class="w-6 h-6 object-contain" />
+              <span class="font-semibold text-sm">
+                {t.hero.nextMatchData.homeTeam}
+              </span>
+            </div>
+
+            <span class="text-xs text-[#111111]/40">vs</span>
+
+            <div class="flex items-center gap-2">
+              <span class="font-semibold text-sm">
+                {t.hero.nextMatchData.awayTeam}
+              </span>
+              <img src={t.hero.nextMatchData.awayLogo} class="w-6 h-6 object-contain" />
+            </div>
+          </div>
+
+          <div class="text-xs text-[#111111]/60">
+            {t.hero.nextMatchData.stadium}
+          </div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <div class="h-[1200px]"></div>
+  <!-- PROBLEM -->
+  <section id="problem" class="bg-[#111111] text-white py-24 px-4">
+    <div class="max-w-[1120px] mx-auto max-w-[900px]">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6 text-[#C4161C]">
+        {t.problem.title}
+      </h2>
+      <p class="text-lg md:text-xl text-white/80 leading-relaxed mb-6">
+        {t.problem.text}
+      </p>
+      <p class="text-lg md:text-xl text-white/80 leading-relaxed">
+        {t.problem.closing}
+      </p>
+    </div>
+  </section>
+
+  <!-- WHAT IS KUSI -->
+  <section id="about" class="py-24 px-4">
+    <div class="max-w-[1120px] mx-auto max-w-[900px]">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">
+        {t.whatIsKusi.title}
+      </h2>
+      <p class="text-lg md:text-xl text-[#111111]/70 leading-relaxed">
+        {t.whatIsKusi.description}
+      </p>
+    </div>
+  </section>
+
+  <!-- INCLUDES / EXCLUDES -->
+  <section id="includes" class="py-24 px-4 bg-[#F7F8FA]">
+    <div class="max-w-[1120px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <div class="bg-white border border-[#E4E6E8] rounded-[24px] shadow-sm p-8">
+        <h3 class="text-2xl font-bold mb-4">
+          {t.includes.title}
+        </h3>
+        <ul class="space-y-3">
+          {t.includes.items.map((item: string) => (
+            <li class="flex gap-3">
+              <span class="w-2 h-2 rounded-full bg-[#C4161C] mt-2"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="bg-white border border-[#E4E6E8] rounded-[24px] shadow-sm p-8">
+        <h3 class="text-2xl font-bold mb-4">
+          {t.excludes.title}
+        </h3>
+        <ul class="space-y-3">
+          {t.excludes.items.map((item: string) => (
+            <li class="flex gap-3">
+              <span class="w-2 h-2 rounded-full bg-[#E4E6E8] mt-2"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="py-24 px-4">
+    <div class="max-w-[1120px] mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-10">
+        {t.howItWorksPage.title}
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+        {t.howItWorksPage.steps.map((step: any, i: number) => (
+          <div class="bg-white border border-[#E4E6E8] rounded-[18px] shadow-sm p-6">
+            <div class="font-bold mb-2">{i + 1}</div>
+            <div class="font-semibold mb-2">{step.title}</div>
+            <div class="text-[#111111]/70 text-sm">{step.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="py-24 px-4 bg-[#F7F8FA]">
+    <div class="max-w-[1120px] mx-auto max-w-[800px]">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">
+        {t.pricingPage.title}
+      </h2>
+
+      <div class="bg-white border-2 border-[#C4161C] rounded-[24px] shadow-sm p-8">
+        <div class="text-5xl font-bold">
+          {t.pricingPage.mainPrice}
+        </div>
+
+        <div class="mt-4">
+          <Button
+            variant="primary"
+            href={waLink}
+            trackingLabel="Pricing CTA"
+            trackingSection="Pricing"
+          >
+            {t.pricingPage.cta}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="final-cta" class="py-24 px-4 bg-[#C4161C] text-white text-center">
+    <div class="max-w-[900px] mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        {t.finalCta.title}
+      </h2>
+      <p class="text-white/80 mb-8">
+        {t.finalCta.subtitle}
+      </p>
+
+      <Button
+        variant="secondary"
+        href={waLink}
+        trackingLabel="Final CTA"
+        trackingSection="FinalCTA"
+      >
+        {t.nav.reserve}
+      </Button>
+    </div>
+  </section>
+
 </BaseLayout>
