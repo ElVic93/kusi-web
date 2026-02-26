@@ -1,71 +1,60 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
 import HeroSlider from '../../components/HeroSlider';
 import Button from '../../components/Button';
 import Badge from '../../components/Badge';
+import Card from '../../components/Card';
+import FAQAccordion from '../../components/FAQAccordion';
 
+import { ASSETS } from '../../lib/constants';
+import { getWhatsAppLink } from '../../lib/utils';
 import { BadgeVariant } from '../../lib/types';
 import { getT } from '../../lib/i18n';
-import { getWhatsAppLink } from '../../lib/utils';
 
 const lang = 'es';
 const t = getT(lang);
-const waLink = getWhatsAppLink(lang);
 ---
 
-<BaseLayout
-  lang={lang}
-  title="KUSI Fútbol Tours"
-  description="Matchday experience in Lima: tickets, transport, guide and a safe local football atmosphere."
->
-  <!-- HERO -->
+<BaseLayout lang={lang} title="KUSI Fútbol Tours" description="">
+  <!-- Hero -->
   <section id="hero" class="relative pt-16 pb-24 md:pt-24 md:pb-32 px-4 overflow-hidden">
     <div class="max-w-[1120px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      
       <div class="z-10">
         <div class="flex flex-wrap gap-2 mb-6">
-          <Badge variant={BadgeVariant.AMBER}>
-            {t.hero.badgeLimited}
-          </Badge>
-          <Badge variant={BadgeVariant.INFO}>
-            {t.hero.badgeGroup}
-          </Badge>
+          <Badge variant={BadgeVariant.AMBER}>{t.hero.badgeLimited}</Badge>
+          <Badge variant={BadgeVariant.INFO}>{t.hero.badgeGroup}</Badge>
         </div>
 
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6 tracking-tight">
           {t.hero.title}{' '}
-          <span class="text-[#C4161C]">
-            {t.hero.titleAccent}
-          </span>
+          <span class="text-[#C4161C]">{t.hero.titleAccent}</span>
         </h1>
 
         <p class="text-lg md:text-xl text-[#111111]/70 leading-relaxed mb-8 max-w-[520px]">
           {t.hero.subtitle}
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 mb-4">
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
           <Button
             variant="primary"
-            href="#pricing"
+            className="px-8"
+            href={getWhatsAppLink(lang)}
             trackingLabel="Hero Primary CTA"
             trackingSection="Hero"
           >
             {t.hero.ctaPrimary}
           </Button>
 
-          <Button variant="secondary" href="#how-it-works">
+          <Button variant="secondary" className="px-8" href="#includes">
             {t.hero.ctaSecondary}
           </Button>
         </div>
 
-        {t.hero.ctaMicrocopy && (
-          <div class="text-xs text-[#111111]/40 italic mb-6">
-            {t.hero.ctaMicrocopy}
-          </div>
-        )}
+        <p class="mt-4 text-xs text-[#111111]/40 italic">{t.hero.ctaMicrocopy}</p>
 
-        <div class="flex flex-wrap gap-3">
-          {(t.hero.trustChips ?? []).map((chip: string) => (
+        <div class="flex flex-wrap gap-3 mt-8">
+          {t.hero.trustChips.map((chip: string) => (
             <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-[#E4E6E8] text-sm font-medium text-[#111111]/70">
               {chip}
             </span>
@@ -73,173 +62,224 @@ const waLink = getWhatsAppLink(lang);
         </div>
       </div>
 
-      <!-- SLIDER + NEXT MATCH -->
       <div class="relative">
         <div class="aspect-[4/5] rounded-[24px] overflow-hidden shadow-2xl bg-[#E4E6E8] border-4 border-white relative">
           <HeroSlider client:visible />
           <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
         </div>
 
-        <!-- NEXT MATCH CARD (lg only, igual que original) -->
-        <div class="hidden lg:block absolute -bottom-10 -left-10 bg-white border border-[#E4E6E8] rounded-[24px] shadow-xl p-6 w-[300px]">
-          
-          <div class="text-xs uppercase tracking-wider text-[#111111]/40 mb-3">
-            {t.hero.nextMatch}
+        <!-- Next Match Card (1:1) -->
+        <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-[20px] shadow-xl border border-[#E4E6E8] hidden lg:block animate-in fade-in slide-in-from-left-4 duration-1000">
+          <p class="text-sm font-bold text-[#C4161C] uppercase tracking-wider mb-3">{t.hero.nextMatch}</p>
+
+          <div class="flex items-center gap-4 mb-2">
+            <img
+              src={t.hero.nextMatchData.homeLogo}
+              alt={`${t.hero.nextMatchData.homeTeam} logo`}
+              class="w-10 h-10 object-contain"
+              onerror="this.style.display='none'"
+            />
+            <p class="text-xl font-bold whitespace-nowrap text-[#111111]">
+              {t.hero.nextMatchData.homeTeam} vs {t.hero.nextMatchData.awayTeam}
+            </p>
+            <img
+              src={t.hero.nextMatchData.awayLogo}
+              alt={`${t.hero.nextMatchData.awayTeam} logo`}
+              class="w-10 h-10 object-contain"
+              onerror="this.style.display='none'"
+            />
           </div>
 
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-2">
-              <img src={t.hero.nextMatchData.homeLogo} class="w-6 h-6 object-contain" />
-              <span class="font-semibold text-sm">
-                {t.hero.nextMatchData.homeTeam}
-              </span>
-            </div>
-
-            <span class="text-xs text-[#111111]/40">vs</span>
-
-            <div class="flex items-center gap-2">
-              <span class="font-semibold text-sm">
-                {t.hero.nextMatchData.awayTeam}
-              </span>
-              <img src={t.hero.nextMatchData.awayLogo} class="w-6 h-6 object-contain" />
-            </div>
-          </div>
-
-          <div class="text-xs text-[#111111]/60">
-            {t.hero.nextMatchData.stadium}
-          </div>
+          <p class="text-[#111111]/60 text-sm">{t.hero.nextMatchData.stadium}</p>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- PROBLEM -->
-  <section id="problem" class="bg-[#111111] text-white py-24 px-4">
-    <div class="max-w-[1120px] mx-auto max-w-[900px]">
-      <h2 class="text-3xl md:text-4xl font-bold mb-6 text-[#C4161C]">
-        {t.problem.title}
-      </h2>
-      <p class="text-lg md:text-xl text-white/80 leading-relaxed mb-6">
-        {t.problem.text}
-      </p>
-      <p class="text-lg md:text-xl text-white/80 leading-relaxed">
-        {t.problem.closing}
-      </p>
+  <!-- Problem -->
+  <section id="problem" class="py-24 bg-[#111111] text-white">
+    <div class="max-w-[800px] mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8 text-[#C4161C]">{t.problem.title}</h2>
+      <p class="text-xl md:text-2xl leading-relaxed mb-8 opacity-90">{t.problem.text}</p>
+      <p class="text-2xl font-bold text-white">{t.problem.closing}</p>
     </div>
   </section>
 
-  <!-- WHAT IS KUSI -->
-  <section id="about" class="py-24 px-4">
-    <div class="max-w-[1120px] mx-auto max-w-[900px]">
-      <h2 class="text-3xl md:text-4xl font-bold mb-6">
-        {t.whatIsKusi.title}
-      </h2>
-      <p class="text-lg md:text-xl text-[#111111]/70 leading-relaxed">
+  <!-- About -->
+  <section id="about" class="py-24 bg-white">
+    <div class="max-w-[1120px] mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{t.whatIsKusi.title}</h2>
+      <p class="text-xl text-[#111111]/70 max-w-3xl mx-auto leading-relaxed">
         {t.whatIsKusi.description}
       </p>
     </div>
   </section>
 
-  <!-- INCLUDES / EXCLUDES -->
-  <section id="includes" class="py-24 px-4 bg-[#F7F8FA]">
-    <div class="max-w-[1120px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-      
-      <div class="bg-white border border-[#E4E6E8] rounded-[24px] shadow-sm p-8">
-        <h3 class="text-2xl font-bold mb-4">
-          {t.includes.title}
-        </h3>
-        <ul class="space-y-3">
-          {t.includes.items.map((item: string) => (
-            <li class="flex gap-3">
-              <span class="w-2 h-2 rounded-full bg-[#C4161C] mt-2"></span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+  <!-- Includes / Excludes -->
+  <section id="includes" class="py-24 bg-[#F7F8FA]">
+    <div class="max-w-[1120px] mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{t.includes.title}</h2>
 
-      <div class="bg-white border border-[#E4E6E8] rounded-[24px] shadow-sm p-8">
-        <h3 class="text-2xl font-bold mb-4">
-          {t.excludes.title}
-        </h3>
-        <ul class="space-y-3">
-          {t.excludes.items.map((item: string) => (
-            <li class="flex gap-3">
-              <span class="w-2 h-2 rounded-full bg-[#E4E6E8] mt-2"></span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <Card>
+          <h3 class="text-2xl font-bold mb-8 flex items-center gap-3">
+            <span class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm">✓</span>
+            {t.includes.subtitle}
+          </h3>
 
+          <ul class="space-y-4">
+            {t.includes.items.map((item: string, i: number) => (
+              <li class="flex items-center gap-3 text-[#111111]/80">
+                <div class="w-1.5 h-1.5 bg-[#C4161C] rounded-full"></div>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Card>
+
+        <Card>
+          <h3 class="text-2xl font-bold mb-8 flex items-center gap-3">
+            <span class="w-8 h-8 rounded-full bg-red-50 text-red-400 flex items-center justify-center text-sm">✕</span>
+            {t.excludes.title}
+          </h3>
+
+          <ul class="space-y-4 opacity-70">
+            {t.excludes.items.map((item: string, i: number) => (
+              <li class="flex items-center gap-3 text-[#111111]/80">
+                <div class="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Card>
+      </div>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
-  <section id="how-it-works" class="py-24 px-4">
-    <div class="max-w-[1120px] mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold mb-10">
-        {t.howItWorksPage.title}
-      </h2>
+  <!-- How it works -->
+  <section id="how-it-works" class="py-24 bg-white">
+    <div class="max-w-[1120px] mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">{t.howItWorksPage.title}</h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
-        {t.howItWorksPage.steps.map((step: any, i: number) => (
-          <div class="bg-white border border-[#E4E6E8] rounded-[18px] shadow-sm p-6">
-            <div class="font-bold mb-2">{i + 1}</div>
-            <div class="font-semibold mb-2">{step.title}</div>
-            <div class="text-[#111111]/70 text-sm">{step.desc}</div>
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+        {t.howItWorksPage.steps.map((s: any, i: number) => (
+          <div class="flex flex-col items-center text-center">
+            <div class="w-12 h-12 rounded-full border-2 border-[#C4161C] text-[#C4161C] font-bold flex items-center justify-center mb-6">
+              0{i + 1}
+            </div>
+            <h4 class="font-bold text-lg mb-2">{s.title}</h4>
+            <p class="text-sm text-[#111111]/60">{s.desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section id="pricing" class="py-24 px-4 bg-[#F7F8FA]">
-    <div class="max-w-[1120px] mx-auto max-w-[800px]">
-      <h2 class="text-3xl md:text-4xl font-bold mb-6">
-        {t.pricingPage.title}
-      </h2>
+  <!-- Pricing -->
+  <section id="pricing" class="py-24 bg-[#F7F8FA]">
+    <div class="max-w-[800px] mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{t.pricingPage.title}</h2>
+      <p class="text-lg text-[#111111]/60 mb-10">{t.pricingPage.subtitle}</p>
 
-      <div class="bg-white border-2 border-[#C4161C] rounded-[24px] shadow-sm p-8">
-        <div class="text-5xl font-bold">
-          {t.pricingPage.mainPrice}
+      <Card className="border-2 border-[#C4161C] py-10">
+        <div class="text-5xl font-black mb-2 text-[#C4161C]">{t.pricingPage.mainPrice}</div>
+        <div class="text-2xl font-bold text-[#111111]/60 mb-2">{t.pricingPage.secondaryPrice}</div>
+        <p class="text-[#111111]/60 mb-4">
+          {t.pricingPage.perPerson} • {t.pricingPage.includesTax}
+        </p>
+        <p class="text-sm font-bold text-[#C4161C] mb-8 uppercase tracking-wider">{t.pricingPage.scarcity}</p>
+
+        <Button
+          href={getWhatsAppLink(lang)}
+          trackingLabel="Home Pricing CTA"
+          trackingSection="Pricing"
+          variant="primary"
+          className="px-12 h-[56px] text-lg"
+        >
+          {t.pricingPage.cta}
+        </Button>
+      </Card>
+    </div>
+  </section>
+
+  <!-- Trust / Safety -->
+  <section id="trust" class="py-24 bg-white">
+    <div class="max-w-[1120px] mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">{t.safety.title}</h2>
+        <p class="text-lg text-[#111111]/70 mb-8 leading-relaxed">{t.safety.description}</p>
+
+        <div class="space-y-4">
+          <div class="flex gap-4 items-start">
+            <div class="w-10 h-10 bg-green-50 rounded-lg flex-shrink-0 flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-bold">{t.safety.monitoring}</h4>
+              <p class="text-sm text-[#111111]/60">{t.safety.monitoringDesc}</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-start">
+            <div class="w-10 h-10 bg-green-50 rounded-lg flex-shrink-0 flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-bold">{t.safety.protocols}</h4>
+              <p class="text-sm text-[#111111]/60">{t.safety.protocolsDesc}</p>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="mt-4">
-          <Button
-            variant="primary"
-            href={waLink}
-            trackingLabel="Pricing CTA"
-            trackingSection="Pricing"
-          >
-            {t.pricingPage.cta}
-          </Button>
+      <div class="bg-[#F7F8FA] rounded-[24px] p-8 text-center border border-[#E4E6E8]">
+        <img
+          src={ASSETS.safety}
+          class="rounded-[16px] shadow-lg mb-8 mx-auto object-cover h-[400px] w-full border-2 border-white"
+          alt="Garantía de seguridad KUSI"
+          loading="lazy"
+        />
+
+        <div class="max-w-md mx-auto">
+          <p class="text-xl italic text-[#111111] mb-4 leading-relaxed">"{t.safety.testimonialText}"</p>
+          <p class="font-bold text-[#111111]">{t.safety.testimonialName}</p>
+          <p class="text-sm text-[#111111]/60 mb-4">{t.safety.testimonialCountry}</p>
+          <p class="text-[10px] uppercase tracking-widest text-[#111111]/30">{t.safety.testimonialLegal}</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FINAL CTA -->
-  <section id="final-cta" class="py-24 px-4 bg-[#C4161C] text-white text-center">
-    <div class="max-w-[900px] mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">
-        {t.finalCta.title}
-      </h2>
-      <p class="text-white/80 mb-8">
-        {t.finalCta.subtitle}
-      </p>
+  <!-- FAQ -->
+  <section id="faq" class="py-24 bg-[#F7F8FA]">
+    <div class="max-w-[800px] mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{t.faqPage.title}</h2>
+      <FAQAccordion client:visible items={t.faqPage.items} />
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="final-cta" class="py-24 bg-[#C4161C] text-white overflow-hidden relative">
+    <div class="max-w-[1120px] mx-auto px-4 text-center relative z-10">
+      <h2 class="text-4xl md:text-5xl font-bold mb-8">{t.finalCta.title}</h2>
+      <p class="text-xl opacity-80 mb-12 max-w-2xl mx-auto">{t.finalCta.subtitle}</p>
 
       <Button
-        variant="secondary"
-        href={waLink}
+        href={getWhatsAppLink(lang)}
         trackingLabel="Final CTA"
-        trackingSection="FinalCTA"
+        trackingSection="Bottom"
+        variant="secondary"
+        className="px-12 h-[56px] text-lg hover:scale-105"
       >
         {t.nav.reserve}
       </Button>
     </div>
-  </section>
 
+    <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full -ml-48 -mb-48"></div>
+  </section>
 </BaseLayout>
