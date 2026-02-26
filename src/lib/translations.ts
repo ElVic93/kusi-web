@@ -7,7 +7,8 @@ export const translations = {
       pricing: "Precio",
       faq: "FAQ",
       reserve: "Reservar",
-      hostels: "Hoteles y Partners"
+      hostels: "Hoteles y Partners",
+      blog: "Blog",
     },
     hero: {
       badgeLimited: "Cupos limitados",
@@ -201,7 +202,8 @@ export const translations = {
       pricing: "Pricing",
       faq: "FAQ",
       reserve: "Book Now",
-      hostels: "Hotels & Accommodation Partners"
+      hostels: "Hotels & Accommodation Partners",
+      blog: "Blog",
     },
     hero: {
       badgeLimited: "Limited spots",

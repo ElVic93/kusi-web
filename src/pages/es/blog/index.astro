@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { getT } from "../../../lib/i18n";
+
+const lang = "es";
+const t = getT(lang);
+
+const all = await getCollection("blog");
+
+// solo EN + orden desc por fecha
+const posts = all
+  .filter((p) => p.data.lang === lang)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// tags para filtro (si lo quieres)
+const tags: string[] = Array.from(
+  new Set(posts.flatMap((p) => p.data.tags ?? []))
+);
+---
+
+<BaseLayout lang={lang} title={`Blog | KUSI`} description={`Guides and tips about Peruvian football in Lima.`}>
+  <section class="py-16 md:py-24 px-4">
+    <div class="max-w-[1120px] mx-auto">
+      <div class="mb-10">
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Blog</h1>
+        <p class="text-[#111111]/60 text-lg max-w-[720px]">
+          Guides and tips to enjoy Peruvian football safely.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {posts.map((post) => (
+          <a
+            href={`/es/blog/${post.slug}/`}
+            class="block bg-white border border-[#E4E6E8] rounded-[24px] overflow-hidden hover:border-[#C4161C]/30 transition-colors"
+          >
+            {post.data.coverImage && (
+              <img
+                src={post.data.coverImage}
+                alt={post.data.title}
+                class="w-full h-[220px] object-cover"
+                loading="lazy"
+              />
+            )}
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-3">
+                {(post.data.tags ?? []).slice(0, 3).map((tag: string) => (
+                  <span class="px-3 py-1 text-xs font-semibold rounded-full border bg-[#F7F8FA] border-[#E4E6E8] text-[#111111]/70">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <h2 class="text-2xl font-bold tracking-tight mb-2">{post.data.title}</h2>
+              <p class="text-[#111111]/60 leading-relaxed">{post.data.description}</p>
+              <p class="text-xs text-[#111111]/40 mt-4">
+                {post.data.date.toISOString().slice(0, 10)}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

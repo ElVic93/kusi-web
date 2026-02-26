@@ -11,17 +11,44 @@ type Props = {
   lang: Lang;
   title?: string;
   description?: string;
+  canonical?: string;
 };
 
-const { lang, title = 'KUSI Futbol Tours', description = '' } = Astro.props;
+const {
+  lang,
+  title = 'KUSI Futbol Tours',
+  description = '',
+  canonical,
+} = Astro.props;
+
+// Base URL (prod)
+const site = Astro.site ?? new URL('https://kusi-futbol-tour.vercel.app/');
+const pathname = Astro.url?.pathname ?? '/';
+
+// Canonical absoluto
+const absUrl = (canonical && canonical.length > 0)
+  ? canonical
+  : new URL(pathname, site).toString();
+
+// Hreflang alternates
+const other = lang === 'en' ? 'es' : 'en';
+const altPath = pathname.replace(/^\/(en|es)(\/|$)/, `/${other}$2`);
+const altUrl = new URL(altPath, site).toString();
+const xDefaultUrl = new URL('/en/', site).toString();
 ---
 
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+
+    <link rel="canonical" href={absUrl} />
+    <link rel="alternate" hreflang={lang} href={absUrl} />
+    <link rel="alternate" hreflang={other} href={altUrl} />
+    <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
 
     <!-- Inter (igual que el proyecto anterior) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,7 +64,7 @@ const { lang, title = 'KUSI Futbol Tours', description = '' } = Astro.props;
     <main class="flex-grow">
       <slot />
     </main>
-    <Footer lang = {lang}/>
+    <Footer lang={lang} />
     <WhatsAppSticky client:load lang={lang} />
   </body>
 </html>
