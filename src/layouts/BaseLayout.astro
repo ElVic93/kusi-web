@@ -1,35 +1,43 @@
 ---
-import "../styles/global.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer.astro";
-import WhatsAppSticky from "../components/WhatsAppSticky";
+import '../styles/global.css';
 
-const { lang = "en", title = "KUSI" } = Astro.props;
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer.astro';
+import WhatsAppSticky from '../components/WhatsAppSticky';
+
+import type { Lang } from '../lib/i18n';
+
+type Props = {
+  lang: Lang;
+  title?: string;
+  description?: string;
+};
+
+const { lang, title = 'KUSI Futbol Tours', description = '' } = Astro.props;
 ---
 
-<!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    {description && <meta name="description" content={description} />}
 
-    <!-- Google Fonts Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Inter (igual que el proyecto anterior) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
-  <body class="min-h-screen flex flex-col bg-[#F7F8FA] text-[#111111]">
-    
-    <Navbar client:load />
-
+  <body class="min-h-screen flex flex-col font-inter bg-[#F7F8FA] text-[#111111]">
+    <Navbar client:load lang={lang} />
     <main class="flex-grow">
       <slot />
     </main>
-
-    <Footer />
-
-    <WhatsAppSticky client:load />
-
+    <Footer lang = {lang}/>
+    <WhatsAppSticky client:load lang={lang} />
   </body>
 </html>
