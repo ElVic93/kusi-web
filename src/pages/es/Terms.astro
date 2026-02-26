@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getT } from '../../lib/i18n';
+
+const lang = 'es';
+const t = getT(lang);
+---
+
+<BaseLayout lang={lang} title={t.termsPage.title} description="">
+  <div class="py-16 md:py-24 px-4 bg-white">
+    <div class="max-w-[800px] mx-auto prose prose-slate">
+      <h1 class="text-3xl font-bold mb-8">{t.termsPage.title}</h1>
+
+      <div class="space-y-8 text-[#111111]/70 leading-relaxed">
+        {t.termsPage.sections.map((section: any) => (
+          <section>
+            <h2 class="text-xl font-bold text-[#111111] mb-3">{section.title}</h2>
+            {section.content && <p>{section.content}</p>}
+            {section.list && (
+              <ul class="list-disc pl-5 space-y-2">
+                {section.list.map((item: string) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

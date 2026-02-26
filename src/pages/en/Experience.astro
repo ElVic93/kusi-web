@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+import Card from '../../components/Card';
+import Button from '../../components/Button';
+import Badge from '../../components/Badge';
+
+import { getWhatsAppLink } from '../../lib/utils';
+import { ASSETS } from '../../lib/constants';
+import { BadgeVariant } from '../../lib/types';
+import { getT } from '../../lib/i18n';
+
+const lang = 'en';
+const t = getT(lang);
+---
+
+<BaseLayout lang={lang} title={t.experiencePage.title} description="">
+  <div class="py-16 md:py-24 px-4 bg-white">
+    <div class="max-w-[900px] mx-auto">
+      <h1 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">
+        {t.experiencePage.title}
+      </h1>
+
+      <section class="mb-12">
+        <!-- Foto 3: Grupo en el bar -->
+        <div class="relative">
+          <img
+            src={ASSETS.experienceBanner}
+            alt="Grupo KUSI en el punto de encuentro"
+            class="w-full h-[450px] object-cover rounded-[24px] mb-8 shadow-xl border border-[#E4E6E8]"
+            loading="lazy"
+          />
+          <div class="absolute top-4 right-4">
+            <Badge variant={BadgeVariant.INFO}>{t.experiencePage.realPhoto}</Badge>
+          </div>
+        </div>
+
+        <h2 class="text-2xl font-bold mb-4 text-[#C4161C]">
+          {t.experiencePage.logisticsTitle}
+        </h2>
+        <p class="text-lg text-[#111111]/70 leading-relaxed">
+          {t.experiencePage.logisticsDesc}
+        </p>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">{t.experiencePage.scheduleTitle}</h2>
+        <div class="grid grid-cols-1 gap-4">
+          {t.experiencePage.schedule.map((item: any, i: number) => (
+            <div class="flex gap-6 items-center p-5 border border-[#E4E6E8] rounded-[18px] hover:border-[#C4161C]/30 transition-colors">
+              <span class="font-bold text-[#C4161C] text-lg w-24 flex-shrink-0">
+                {item.time}
+              </span>
+              <span class="text-[#111111]/80 font-medium">{item.task}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <Card className="bg-[#F7F8FA] border-none p-10">
+          <h2 class="text-2xl font-bold mb-4">{t.experiencePage.paymentTitle}</h2>
+          <p class="text-[#111111]/70 leading-relaxed mb-6">
+            {t.experiencePage.paymentDesc}
+          </p>
+
+          <div class="p-4 bg-white rounded-xl border border-red-100 flex items-start gap-3">
+            <span class="text-red-500 font-bold">!</span>
+            <p class="text-sm font-semibold text-[#C4161C]">
+              {t.experiencePage.paymentNote}
+            </p>
+          </div>
+        </Card>
+      </section>
+
+      <div class="text-center pt-8 border-t border-[#E4E6E8]">
+        <h3 class="text-2xl font-bold mb-6">{t.experiencePage.footerQuestion}</h3>
+        <Button
+          href={getWhatsAppLink(lang)}
+          trackingLabel="Experience Contact"
+          trackingSection="ExperienceDetail"
+          variant="primary"
+          className="px-12 h-[56px] text-lg"
+        >
+          {t.faqPage.cta}
+        </Button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

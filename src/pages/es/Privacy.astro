@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getT } from '../../lib/i18n';
+
+const lang = 'es';
+const t = getT(lang);
+---
+
+<BaseLayout lang={lang} title={t.privacyPage.title} description="">
+  <div class="py-16 md:py-24 px-4 bg-white">
+    <div class="max-w-[800px] mx-auto prose prose-slate">
+      <h1 class="text-3xl font-bold mb-8">
+        {t.privacyPage.title}
+      </h1>
+
+      <div class="text-[#111111]/70 leading-relaxed">
+        <p>{t.privacyPage.content}</p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

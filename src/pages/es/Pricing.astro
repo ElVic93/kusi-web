@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card';
+import Button from '../../components/Button';
+import Badge from '../../components/Badge';
+
+import { BadgeVariant } from '../../lib/types';
+import { getT } from '../../lib/i18n';
+
+const lang = 'es';
+const t = getT(lang);
+---
+
+<BaseLayout lang={lang} title="KUSI" description="">
+  <div class="py-16 md:py-24 px-4">
+    <div class="max-w-[800px] mx-auto">
+      <div class="text-center mb-16">
+        <Badge variant={BadgeVariant.AMBER}>{t.pricingPage.subtitle}</Badge>
+        <h1 class="text-4xl md:text-5xl font-bold mt-4 mb-6 tracking-tight">
+          {t.pricingPage.title}
+        </h1>
+        <p class="text-xl text-[#111111]/60">{t.pricingPage.subtitle}</p>
+      </div>
+
+      <Card className="border-2 border-[#C4161C] p-0 overflow-hidden mb-12">
+        <div class="bg-[#C4161C] p-8 text-white text-center">
+          <h2 class="text-2xl font-bold opacity-80 mb-2">KUSI Matchday</h2>
+          <div class="text-6xl font-black">{t.pricingPage.mainPrice}</div>
+          <div class="text-2xl font-bold opacity-80 mt-2">{t.pricingPage.secondaryPrice}</div>
+          <p class="mt-2 opacity-80">
+            {t.pricingPage.perPerson} / {t.pricingPage.includesTax}
+          </p>
+        </div>
+
+        <div class="p-8 md:p-12 bg-white">
+          <h3 class="font-bold text-lg mb-6 text-center">{t.pricingPage.whyPay}</h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {t.pricingPage.benefits.map((item, i) => (
+              <div class="flex gap-4">
+                <div class="text-[#C4161C] font-bold text-xl">✓</div>
+                <div>
+                  <h4 class="font-bold text-[#111111]">{item.title}</h4>
+                  <p class="text-sm text-[#111111]/60">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-12 pt-8 border-t border-[#E4E6E8]">
+            <Button
+              href="#contact"
+              trackingLabel="Pricing Detailed CTA"
+              trackingSection="PricingPage"
+              fullWidth
+              variant="primary"
+              className="h-[60px] text-xl"
+            >
+              {t.pricingPage.cta}
+            </Button>
+
+            <p class="text-center text-xs text-[#111111]/40 mt-4">
+              {t.pricingPage.paymentNote}
+            </p>
+          </div>
+        </div>
+      </Card>
+
+      <section class="space-y-8">
+        <h3 class="text-2xl font-bold">{t.pricingPage.infoTitle}</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="p-6 bg-white border border-[#E4E6E8] rounded-[18px]">
+            <h4 class="font-bold mb-2">{t.pricingPage.reservaTitle}</h4>
+            <p class="text-[#111111]/70 text-sm">{t.pricingPage.reservaDesc}</p>
+          </div>
+
+          <div class="p-6 bg-white border border-[#E4E6E8] rounded-[18px]">
+            <h4 class="font-bold mb-2">{t.pricingPage.groupsTitle}</h4>
+            <p class="text-[#111111]/70 text-sm">{t.pricingPage.groupsDesc}</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
