@@ -2,6 +2,10 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { getT } from "../../../lib/i18n";
+
+const lang = "en";
+const t = getT(lang);
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -21,7 +25,12 @@ const SITE = "https://kusi-futbol-tour.vercel.app";
 const canonical = post.data.canonical ?? `${SITE}/en/blog/${post.slug}/`;
 ---
 
-<BaseLayout lang="en" title={post.data.title} description={post.data.description}>
+<BaseLayout
+  lang={lang}
+  title={`${post.data.title} | KUSI`}
+  description={post.data.description}
+  canonical={canonical}
+>
   <article class="py-16 md:py-24 px-4 bg-white">
     <div class="max-w-[800px] mx-auto">
       <header class="mb-10">
@@ -51,7 +60,7 @@ const canonical = post.data.canonical ?? `${SITE}/en/blog/${post.slug}/`;
           href="/en/blog/"
           class="inline-flex items-center justify-center font-semibold rounded-[14px] bg-white border border-[#E4E6E8] hover:bg-[#F7F8FA] h-[44px] px-6"
         >
-          Back to Blog
+          {t.blogPage.backToBlog ?? "Back to Blog"}
         </a>
       </div>
     </div>

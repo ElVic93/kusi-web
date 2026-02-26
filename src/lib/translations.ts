@@ -10,6 +10,13 @@ export const translations = {
       hostels: "Hoteles y Partners",
       blog: "Blog",
     },
+    blogPage: {
+      metaTitle: "Blog | KUSI",
+      metaDescription: "Guías y consejos sobre cómo vivir el fútbol peruano en Lima de forma segura y organizada.",
+      title: "Blog KUSI",
+      subtitle: "Guías y consejos para vivir el fútbol peruano en Lima.",
+      backToBlog: "Volver al blog",
+    },
     hero: {
       badgeLimited: "Cupos limitados",
       badgeGroup: "Grupo máx. 10",
@@ -204,6 +211,13 @@ export const translations = {
       reserve: "Book Now",
       hostels: "Hotels & Accommodation Partners",
       blog: "Blog",
+    },
+    blogPage: {
+      metaTitle: "Blog | KUSI",
+      metaDescription: "Guides and tips to experience Peruvian football in Lima safely and organized.",
+      title: "KUSI Blog",
+      subtitle: "Guides and tips to experience Peruvian football in Lima.",
+      backToBlog: "Volver al blog",
     },
     hero: {
       badgeLimited: "Limited spots",
