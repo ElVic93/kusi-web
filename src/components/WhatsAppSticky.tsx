@@ -1,13 +1,32 @@
-export default function WhatsAppSticky() {
+import React from 'react';
+import Button from './Button';
+import { getWhatsAppLink } from '../lib/utils';
+import type { Lang } from '../lib/i18n';
+
+type Props = {
+  lang: Lang;
+};
+
+const WhatsAppSticky: React.FC<Props> = ({ lang }) => {
   return (
-    <div className="fixed bottom-6 right-6 md:hidden">
-      <a
-        href="https://wa.me/51999999999"
-        target="_blank"
-        className="inline-flex items-center justify-center rounded-[14px] bg-[#C4161C] px-5 h-[48px] text-white font-semibold shadow-xl"
+    <div className="fixed bottom-0 left-0 right-0 z-40 p-4 bg-white/80 backdrop-blur-sm border-t border-[#E4E6E8] md:hidden">
+      <Button
+        href={getWhatsAppLink(lang)}
+        trackingLabel="Sticky Mobile CTA"
+        trackingSection="BottomSticky"
+        fullWidth
+        variant="primary"
+        className="h-[52px]"
       >
-        WhatsApp
-      </a>
+        <span className="flex items-center gap-2">
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.417-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.305 1.652zm6.599-3.835l.398.236c1.39.824 3.001 1.259 4.653 1.26h.001c5.62 0 10.191-4.57 10.194-10.19.001-2.724-1.061-5.286-2.99-7.215-1.928-1.928-4.487-2.991-7.213-2.992-5.624 0-10.196 4.572-10.198 10.193-.001 1.83.489 3.615 1.417 5.174l.259.436-.985 3.597 3.684-.967zm10.334-7.536c-.27-.135-1.594-.787-1.841-.876-.247-.09-.427-.135-.607.135-.18.27-.697.876-.855 1.057-.157.18-.315.202-.585.067-.27-.135-1.139-.42-2.17-1.34-.801-.715-1.342-1.597-1.499-1.867-.157-.27-.017-.417.118-.552.121-.122.27-.315.405-.472.135-.158.18-.27.27-.45.09-.18.045-.337-.022-.472-.067-.135-.607-1.462-.832-2.003-.22-.529-.46-.457-.63-.466l-.54-.01c-.18 0-.472.067-.72.337-.247.27-.945.923-.945 2.25s.967 2.61 1.102 2.79c.135.18 1.905 2.909 4.612 4.082.645.278 1.148.445 1.541.569.647.205 1.236.176 1.701.107.518-.077 1.594-.652 1.819-1.283.225-.63.225-1.17.157-1.283-.068-.113-.248-.18-.518-.315z" />
+          </svg>
+          Reservar por WhatsApp
+        </span>
+      </Button>
     </div>
   );
-}
+};
+
+export default WhatsAppSticky;
